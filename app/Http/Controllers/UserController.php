@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
@@ -18,17 +19,20 @@ class UserController extends Controller
     public function store(Request $request){
         $params = $request->all();
         $user = User::create($params);
-        return $user;
+        $request = session()->flash('success', 'User created');
+        return response()->json($user);
     }
 
     public function update(Request $request, User $user){
         $params = $request-> all();
         $user->update($params);
+        $request = session()->flash('success', 'User updated');
         return $user;
     }
 
     public function destroy(User $user){
         $user->delete();
+        session()->flash('success', 'User deleted');
         return response()->json(['message'=>'Usuário excluído com sucesso'], 204);
     }
 }

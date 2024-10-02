@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('usuarios', function (Blueprint $table) {
             $table->id();
+            $table->string('bank');
+            $table->string('user');
+            $table->string('cpf');
+            $table->string('agent_id');
+            $table->string('agent');
+            $table->string('approval');
+            $table->string('profile');
+
+
             $table->timestamps();
         });
     }
