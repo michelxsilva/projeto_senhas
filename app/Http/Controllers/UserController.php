@@ -10,24 +10,24 @@ class UserController extends Controller
 {
     public function index(){
         $users = User::all();
-        return view('users.index', compact('users'));
+        return response()->json($users);
     }
     public function create(){
         return view('users.create');
     }
     
-    public function store(Request $request){
+    public function store(UserRequest $request){
         $params = $request->all();
         $user = User::create($params);
-        $request = session()->flash('success', 'User created');
+        session()->flash('success', 'User created');
         return response()->json($user);
     }
 
-    public function update(Request $request, User $user){
+    public function update(UserRequest $request, User $user){
         $params = $request-> all();
         $user->update($params);
-        $request = session()->flash('success', 'User updated');
-        return $user;
+        session()->flash('success', 'User updated');
+        return response()->json($user);
     }
 
     public function destroy(User $user){

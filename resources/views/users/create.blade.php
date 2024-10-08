@@ -5,7 +5,7 @@
     <h1 class="my-4">Create New User</h1>
 
     <form action="" method="POST">
-        @csrf
+         @csrf
         <div class="mb-3">
             <label for="bank" class="form-label">Bank</label>
             <input type="text" class="form-control" id="bank" name="bank" required>
