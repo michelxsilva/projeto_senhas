@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UsersRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,14 +17,14 @@ class UserController extends Controller
         return view('users.create');
     }
     
-    public function store(Request $request){
+    public function store(UsersRequest $request){
         $params = $request->all();
         $user = User::create($params);
         $request = session()->flash('success', 'User created');
         return response()->json($user);
     }
 
-    public function update(Request $request, User $user){
+    public function update(UsersRequest $request, User $user){
         $params = $request-> all();
         $user->update($params);
         $request = session()->flash('success', 'User updated');
