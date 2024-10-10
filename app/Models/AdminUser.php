@@ -9,8 +9,13 @@ class AdminUser extends Model
 {
     use HasFactory;
 
+
+
     protected $fillable = [
       
      
     ];
+    public function managers(){
+        return $this->hasMany(Manager::class);
+    }
 }

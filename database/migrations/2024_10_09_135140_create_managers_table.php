@@ -11,17 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('usuarios', function (Blueprint $table) {
+        Schema::create('managers', function (Blueprint $table) {
             $table->id();
-            $table->string('bank');
-            $table->string('user');
-            $table->string('cpf');
-            $table->string('agent_id');
-            $table->string('agent');
-            $table->string('approval');
-            $table->string('profile');
-
-
+            $table->unsignedTinyInteger('id');
+            $table->foreignId('sers_id')->constrained();
             $table->timestamps();
         });
     }
@@ -31,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('usuarios');
+        Schema::dropIfExists('managers');
     }
 };

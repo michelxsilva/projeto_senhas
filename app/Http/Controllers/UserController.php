@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
@@ -12,27 +11,31 @@ class UserController extends Controller
         $users = User::all();
         return response()->json($users);
     }
-    public function create(){
-        return view('users.create');
+
+    public function store(Request $request){
+        $user = User::create($request->all());
+        return response()->json($user, 201);
     }
-    
-    public function store(UserRequest $request){
-        $params = $request->all();
-        $user = User::create($params);
-        session()->flash('success', 'User created');
+
+    public function show($id){
+        $user = User::find($id);
+        if($user){
+            return response()->json($user);
+        }
+        return response()->json(['message' => 'User not found'], 404);
+    }
+
+    public function update(Request $request, User $user){
+        $user->update($request->all());
         return response()->json($user);
     }
 
-    public function update(UserRequest $request, User $user){
-        $params = $request-> all();
-        $user->update($params);
-        session()->flash('success', 'User updated');
-        return response()->json($user);
-    }
-
-    public function destroy(User $user){
-        $user->delete();
-        session()->flash('success', 'User deleted');
-        return response()->json(['message'=>'Usuário excluído com sucesso'], 204);
+    public function destroy($id){
+        $user = User::find($id);
+        if($user){
+            $user->delete();
+            return response()->json(['message' => 'User deleted successfully'], 204);
+        }
+        return response()->json(['message' => 'User not found'], 404);
     }
 }
